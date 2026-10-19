@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Un administrador es quien tiene un documento admins/{su uid}. Esos documentos solo se crean a mano en la consola de Firebase.
+    function esAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Datos del torneo: los lee cualquiera, solo los administradores los cambian.
+    match /torneo/datos {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+
+    // Datos internos (por ejemplo, W.O. pagados): solo los ven los administradores.
+    match /torneo/privado {
+      allow read, write: if esAdmin();
+    }
+
+    // Cada persona puede comprobar si ella misma es administradora; nadie puede crear administradores desde la página.
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+  }
+}
