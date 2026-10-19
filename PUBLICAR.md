@@ -41,6 +41,15 @@ Las partes 1 a 3 se hacen en el navegador, en las consolas de Firebase, GitHub y
 4. Vuelve a Firebase → Authentication → **Settings → Authorized domains** → **Agregar dominio** con esa dirección.
    Es una precaución: el ingreso con usuario y contraseña normalmente funciona igual, pero así se evitan sorpresas.
 
+## Notas de Netlify (aprendidas al publicar)
+
+- **Privado por defecto:** Netlify crea el proyecto como *Private* y el público ve un login de Netlify. Para abrirlo:
+  Project configuration → General → **Visitor access** → **Public** → Save.
+- **Repositorio privado:** si el repositorio no aparece al importar, toca *Configure the Netlify app on GitHub*, agrega el repositorio
+  en *Repository access* y **no quites los que ya estaban** (otros sitios dejarían de actualizarse).
+- El archivo `_redirects` oculta al público la documentación interna (`CLAUDE.md`, `README.md`, `PUBLICAR.md`, `firestore.rules`).
+- Dirección actual: `https://copa-malalas.netlify.app/` · administración: `https://copa-malalas.netlify.app/admin.html`.
+
 ## 3b. Subdominio propio (ejemplo: `copamalalas.totalsportcolombia.com`)
 
 Se puede hacer antes o después del paso 4. Solo se AGREGA un registro nuevo; no se toca ninguno de los que ya existen en el dominio.
